@@ -18,6 +18,7 @@ import Yaml
 import Kitura
 import CryptoSwift
 import SwiftyJSON
+import OAuthCommon
 
 public class BrowserTokenProvider: TokenProvider {
   public var consumerKey: String?

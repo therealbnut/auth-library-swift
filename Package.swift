@@ -1,3 +1,5 @@
+// swift-tools-version:4.0
+
 // Copyright 2017 Google Inc. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,17 +13,24 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
 import PackageDescription
 
 let package = Package(
   name: "Auth",
-  targets: [
-    Target(name: "OAuth1"),
-    Target(name: "OAuth2"),
-    ],
+  products: [
+    .library(name: "OAuth1", targets: ["OAuth1"]),
+    .library(name: "OAuth2", targets: ["OAuth2"]),
+  ],
   dependencies: [
-    .Package(url: "https://github.com/IBM-Swift/Kitura.git", majorVersion: 1, minor: 7),
-    .Package(url: "https://github.com/behrang/YamlSwift.git", Version(3, 4, 0)),
-    .Package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", Version(0, 7, 2)),
-    ]
+    .package(url: "https://github.com/IBM-Swift/Kitura.git", from: "2.0.0"),
+    .package(url: "https://github.com/behrang/YamlSwift.git", from: "3.4.0"),
+    .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", from: "0.8.0"),
+    .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", from: "3.1.4"),
+  ],
+  targets: [
+    .target(name: "OAuth1", dependencies: ["Yaml", "Kitura", "CryptoSwift", "SwiftyJSON", "OAuthCommon"]),
+    .target(name: "OAuth2", dependencies: ["Yaml", "Kitura", "CryptoSwift", "SwiftyJSON", "OAuthCommon"]),
+    .target(name: "OAuthCommon", dependencies: []),
+  ]
 )
